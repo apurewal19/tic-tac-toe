@@ -27,19 +27,28 @@ function handleClick(e) {
     placeMark(cell, currentClass)
     if (checkWin(currentClass)) {
         endGame(false)
+    } else if (isDraw()) {
+        endGame(true)
+    } else {
+        swapTurns()
+        setBoardHoverClass()
     }
-
-    swapTurns()
-    setBoardHoverClass()
 }
 
 function endGame(draw) {
     if (draw) {
-
+        winningMessageTextElement.innerText = 'Draw!'
     } else {
         winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`
     }
     winningMessageElement.classList.add('show')
+}
+
+function isDraw() {
+    return [...cellElements].every(cell => {
+        return cell.classList.contains(x_class) ||
+        cell.classList.contains(circle_class)
+    })
 }
 
 function placeMark(cell, currentClass) {
