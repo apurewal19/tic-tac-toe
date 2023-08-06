@@ -9,16 +9,23 @@ const cellElements = document.querySelectorAll("[data-cell]")
 const board = document.getElementById("board")
 const winningMessageTextElement = document.querySelector("[data-winning-message-text]")
 const winningMessageElement = document.getElementById("winningMessage")
+const restartButton = document.getElementById("restartButton")
 let circleTurn
 
 startGame()
 
+restartButton.addEventListener('click', startGame)
+
 function startGame() {
     circleTurn = false
     cellElements.forEach (cell => {
+        cell.classList.remove(x_class)
+        cell.classList.remove(circle_class)
+        cell.removeEventListener('click', handleClick)
         cell.addEventListener('click', handleClick, {once: true})
     })
     setBoardHoverClass()
+    winningMessageElement.classList.remove('show')
 }
 
 function handleClick(e) {
